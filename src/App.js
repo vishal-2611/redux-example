@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { plsadd, sayhi } from './redux/action';
 
-function App() {
+import Home from './home';
+function App(props) {
+  console.log(props);
+  const x = 7;
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p style={{ color: '#000' }}>{props.mnumber}</p>
+        <button onClick={() => props.plsadd(730)}>button 1</button>
+        <button onClick={() => props.plsadd(900)}>button 2</button>
+        <p onClick={() => props.sayhi(x)}>hello boy{props.number}</p>
       </header>
+      <Home />
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { mnumber: state.mobile, number: state.name };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      plsadd,
+      sayhi
+    },
+    dispatch
+  );
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
